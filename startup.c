@@ -14,10 +14,33 @@ void Reset_Handler(void) {
         src++;
     }
 
-    // zero .bss  <- you write this
+    dst = &_sbss;
+    while (dst < &_ebss){
+
+        *dst = 0; 
+        dst++;
+
+    }
 
     main();
 
     while (1) {
     }
 }
+
+
+void Default_Handler(void) {
+    while (1) {
+    }
+}
+
+
+typedef void (*handler_t)(void);
+
+__attribute__((section(".isr_vector"), used))
+const handler_t vector_table[] = {
+    (handler_t)&_estack,   
+    Reset_Handler,         
+    Default_Handler,       
+    Default_Handler,       
+};
