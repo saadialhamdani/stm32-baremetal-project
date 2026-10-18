@@ -9,7 +9,7 @@
 
 int main(void) {
     RCC_AHB1ENR |= (1U << 0);
-    GPIOA_MODER &= (3U << 11);
+    GPIOA_MODER &= (3U << 10);
     GPIOA_MODER |= (1U <<10);
 
 
