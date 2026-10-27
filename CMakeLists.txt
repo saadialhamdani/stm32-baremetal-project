@@ -3,8 +3,12 @@ project(blinky C)
 
 add_executable(blinky.elf startup.c main.c)
 
+# -ffreestanding / -fno-builtin: there is no C library in this image, so GCC
+# must not assume hosted semantics or emit implicit calls to memcpy/memset.
 target_compile_options(blinky.elf PRIVATE
-    -mcpu=cortex-m4 -mthumb -O0 -g -Wall)
+    -mcpu=cortex-m4 -mthumb -O0 -g
+    -Wall -Wextra
+    -ffreestanding -fno-builtin)
 
 target_link_options(blinky.elf PRIVATE
     -mcpu=cortex-m4 -mthumb -nostdlib
